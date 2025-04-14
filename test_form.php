@@ -47,7 +47,7 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Feedback Form</title>
-    <link rel="stylesheet" href="Design/form_design.css">
+    <link rel="stylesheet" href="Style/form_design.css">
 </head>
 
 <body>
