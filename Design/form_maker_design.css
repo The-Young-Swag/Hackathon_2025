@@ -1,0 +1,385 @@
+/* form_maker_design.css */
+
+/* Main Content Area */
+.main-content {
+    margin-left: 260px;
+    padding: 40px;
+    background: linear-gradient(135deg, #e0e7ff, #f4f7f9);
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.shifted {
+    margin-left: 60px;
+}
+
+/* Form Maker Container */
+.form-maker-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+/* Form Maker Header */
+.form-maker-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-maker-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #34495e;
+    margin: 0 0 15px;
+    border-bottom: 2px solid #50c878;
+    padding-bottom: 10px;
+}
+
+/* Success/Error Messages */
+.message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.message.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.message.error {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #50c878;
+}
+
+/* Metadata Inputs */
+.metadata-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 15px;
+    background: #f9fbfc;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.metadata-section label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #34495e;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.metadata-section input {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #34495e;
+    background: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metadata-section input:focus {
+    border-color: #50c878;
+    box-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
+    outline: none;
+}
+
+/* Submit Button */
+form > button[type="submit"] {
+    background: linear-gradient(45deg, #50c878, #2ecc71);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+form > button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(80, 200, 120, 0.3);
+}
+
+/* Question Cards */
+.question-card {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9fbfc;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    transition: box-shadow 0.2s ease;
+    cursor: move;
+}
+
+.question-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.question-card.dragging {
+    opacity: 0.5;
+}
+
+.question-card label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #34495e;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.question-card input,
+.question-card textarea,
+.question-card select {
+    width: 95%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #34495e;
+    background: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.question-card textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.question-card input:focus,
+.question-card textarea:focus,
+.question-card select:focus {
+    border-color: #50c878;
+    box-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
+    outline: none;
+}
+
+.question-card .remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.question-card .remove-btn:hover {
+    transform: scale(1.1);
+}
+
+.question-card .options-btn {
+    background: #50c878;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.question-card .options-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(80, 200, 120, 0.3);
+}
+
+.question-card .options-list {
+    margin-top: 10px;
+}
+
+.question-card .options-list .option {
+    background: #eef2f6;
+    padding: 8px;
+    border-radius: 6px;
+    margin: 5px 0;
+    font-size: 13px;
+    color: #34495e;
+}
+
+/* Add Question Button */
+.add-question-btn {
+    background: linear-gradient(45deg, #50c878, #2ecc71);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 20px 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-question-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(80, 200, 120, 0.3);
+}
+
+/* Options Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.option-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.option-item input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #34495e;
+    background: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.option-item input:focus {
+    border-color: #50c878;
+    box-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
+    outline: none;
+}
+
+.option-item .remove-option-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.option-item .remove-option-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px 10px;
+    }
+
+    .form-maker-container {
+        padding: 20px;
+    }
+
+    .form-maker-header h1 {
+        font-size: 24px;
+    }
+
+    .form-section h3 {
+        font-size: 18px;
+    }
+
+    .metadata-section {
+        grid-template-columns: 1fr;
+    }
+
+    .question-card input,
+    .question-card textarea,
+    .question-card select {
+        font-size: 13px;
+    }
+
+    .add-question-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-maker-header h1 {
+        font-size: 20px;
+    }
+
+    .question-card label {
+        font-size: 13px;
+    }
+
+    .question-card input,
+    .question-card textarea,
+    .question-card select {
+        font-size: 12px;
+    }
+
+    .option-item input {
+        font-size: 12px;
+    }
+}
