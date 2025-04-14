@@ -1,12 +1,11 @@
 <?php
-// Connect to the database
+
 try {
-    require 'db_connection.php';
+    require 'Config/db_connection.php';
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Get all form codes for the switcher
 $all_form_codes = [];
 try {
     $stmt = $pdo->query("SELECT form_code FROM forms ORDER BY form_code");
@@ -31,7 +30,6 @@ if (!$form) {
     die("Form not found for code: " . htmlspecialchars($selected_form_code));
 }
 
-// Get questions, ordered by display_order
 $questions_query = "SELECT q.*, qt.type_name 
                    FROM questions q 
                    JOIN question_types qt ON q.type_id = qt.type_id 
@@ -53,7 +51,7 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <!-- Form Code Switcher (Testing Only) -->
+
     <div class="form-switcher">
         <label for="form-code-switcher">Test Form Code: </label>
         <select id="form-code-switcher" onchange="switchFormCode()">
@@ -76,7 +74,7 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </p>
         </div>
 
-        <!-- Client Information -->
+
         <div class="form-section">
             <h3>Client Information</h3>
             <p class="instructions">Please check (✔) your answer.</p>
@@ -134,11 +132,11 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <!-- Dynamic Questions -->
+
         <?php
         $current_section = '';
         foreach ($questions as $question) {
-            // Switch sections for CC and SQD
+
             if (strpos($question['question_code'], 'CC') === 0 && $current_section != 'CC') {
                 $current_section = 'CC';
                 echo '<div class="form-section"><h3>Citizen’s Charter Questions</h3></div>';
@@ -195,7 +193,7 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php } ?>
 
-        <!-- Suggestions/Comments -->
+
         <div class="form-section">
             <h3>Suggestions/Recommendations/Comments</h3>
             <textarea name="comments" rows="5"></textarea>
@@ -206,7 +204,6 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </form>
 
     <script>
-        // Handle form code switching
         function switchFormCode() {
             const select = document.getElementById('form-code-switcher');
             const formCode = select.value;

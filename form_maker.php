@@ -1,6 +1,6 @@
 <?php
-// form_maker.php
-require_once 'db_connection.php'; // Include database connection
+
+require 'Config/db_connection.php';
 
 // Initialize variables
 $question_types = [];
@@ -86,11 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Maker - Admin</title>
 
-    <link rel="stylesheet" href="Design/form_maker_design.css">
+    <link rel="stylesheet" href="Style/form_maker_design.css">
 </head>
 
 <body>
-    <!-- Sidebar -->
+
     <div class="sidebar">
         <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
         <h2>Admin Panel</h2>
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button class="logout-btn"><i class="fas fa-sign-out-alt"></i><span class="link-text">Logout</span></button>
     </div>
 
-    <!-- Main Content -->
+
     <div class="main-content">
         <div class="form-maker-container">
             <div class="form-maker-header">
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- Options Modal -->
+
     <div class="modal options-modal" id="options-modal">
         <div class="modal-content">
             <h2>Manage Options</h2>
@@ -158,13 +158,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
-        // Pass PHP question types to JavaScript
         const questionTypes = <?php echo json_encode($question_types); ?>;
     </script>
-    <script src="JavaScript/form_maker.js"></script>
+    <script src="Script/form_maker.js"></script>
 </body>
 
 </html>
