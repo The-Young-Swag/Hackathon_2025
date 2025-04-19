@@ -1,50 +1,64 @@
-/* form_maker_design.css */
 
-/* Main Content Area */
-.main-content {
-    margin-left: 260px;
-    padding: 40px;
-    background: linear-gradient(135deg, #e0e7ff, #f4f7f9);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body layout */
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    display: flex;
+    flex-direction: row;
     min-height: 100vh;
-    transition: margin-left 0.3s ease;
+    background: linear-gradient(135deg, #e0e7ff, #f4f7f9);
 }
 
-.main-content.shifted {
+
+/* Main content */
+.main-content {
+    flex: 1;
+    margin-left: 50px;
+    padding: 40px;
+    width: calc(100% - 260px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+.sidebar.minimized ~ .main-content {
     margin-left: 60px;
+    width: calc(100% - 60px);
 }
 
-/* Form Maker Container */
+/* Form container */
 .form-maker-container {
-    max-width: 900px;
-    margin: 0 auto;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 30px;
+    width: 100%;
 }
 
-/* Form Maker Header */
+/* Header */
 .form-maker-header {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
 }
 
 .form-maker-header h1 {
     font-size: 28px;
-    font-weight: 600;
     color: #34495e;
-    margin: 0 0 15px;
-    border-bottom: 2px solid #50c878;
-    padding-bottom: 10px;
+    margin: 0;
 }
 
-/* Success/Error Messages */
+/* Messages */
 .message {
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin: 20px 0;
     text-align: center;
+    font-size: 14px;
 }
 
 .message.success {
@@ -57,24 +71,21 @@
     color: #d32f2f;
 }
 
-/* Form Sections */
+/* Form sections */
 .form-section {
     margin-bottom: 30px;
 }
 
 .form-section h3 {
     font-size: 20px;
-    font-weight: 600;
     color: #34495e;
-    margin-bottom: 15px;
-    padding-left: 10px;
-    border-left: 4px solid #50c878;
+    margin-bottom: 20px;
 }
 
-/* Metadata Inputs */
+/* Metadata inputs */
 .metadata-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 15px;
     background: #f9fbfc;
@@ -84,63 +95,60 @@
 
 .metadata-section label {
     font-size: 14px;
-    font-weight: 500;
     color: #34495e;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1;
+    min-width: 220px;
 }
 
 .metadata-section input {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     font-size: 14px;
     color: #34495e;
     background: #ffffff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .metadata-section input:focus {
     border-color: #50c878;
-    box-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
     outline: none;
 }
 
-/* Submit Button */
+/* Submit button */
 form > button[type="submit"] {
-    background: linear-gradient(45deg, #50c878, #2ecc71);
+    background: #50c878;
     color: white;
-    padding: 12px 30px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
     width: 100%;
-    margin-top: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 form > button[type="submit"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(80, 200, 120, 0.3);
+    background: #2ecc71;
 }
 
-/* Question Cards */
+/* Question cards */
 .question-card {
-    margin: 20px 0;
-    padding: 15px;
     background: #f9fbfc;
+    padding: 20px;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
+    margin-bottom: 15px;
     position: relative;
-    transition: box-shadow 0.2s ease;
     cursor: move;
+    transition: box-shadow 0.2s ease;
 }
 
 .question-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .question-card.dragging {
@@ -149,25 +157,25 @@ form > button[type="submit"]:hover {
 
 .question-card label {
     font-size: 14px;
-    font-weight: 500;
     color: #34495e;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .question-card input,
 .question-card textarea,
 .question-card select {
-    width: 95%;
-    padding: 12px;
+    width: 100%;
+    padding: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     font-size: 14px;
     color: #34495e;
     background: #ffffff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .question-card textarea {
@@ -179,7 +187,6 @@ form > button[type="submit"]:hover {
 .question-card textarea:focus,
 .question-card select:focus {
     border-color: #50c878;
-    box-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
     outline: none;
 }
 
@@ -212,13 +219,12 @@ form > button[type="submit"]:hover {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 14px;
+    transition: background 0.2s;
 }
 
 .question-card .options-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(80, 200, 120, 0.3);
+    background: #2ecc71;
 }
 
 .question-card .options-list {
@@ -234,29 +240,25 @@ form > button[type="submit"]:hover {
     color: #34495e;
 }
 
-/* Add Question Button */
+/* Add question button */
 .add-question-btn {
-    background: linear-gradient(45deg, #50c878, #2ecc71);
+    background: #50c878;
     color: white;
-    padding: 12px 30px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
-    margin: 20px 0;
-    display: block;
+    font-size: 14px;
+    transition: background 0.2s;
     width: 100%;
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 10px;
 }
 
 .add-question-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(80, 200, 120, 0.3);
+    background: #2ecc71;
 }
 
-/* Options Modal */
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -265,17 +267,23 @@ form > button[type="submit"]:hover {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
     background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    max-width: 600px;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
     width: 90%;
     position: relative;
+}
+
+.modal-content h2 {
+    font-size: 20px;
+    color: #34495e;
+    margin-bottom: 20px;
 }
 
 .close-modal {
@@ -284,8 +292,9 @@ form > button[type="submit"]:hover {
     right: 10px;
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
+    color: #666;
 }
 
 .option-item {
@@ -297,18 +306,17 @@ form > button[type="submit"]:hover {
 
 .option-item input {
     flex: 1;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     font-size: 14px;
     color: #34495e;
     background: #ffffff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .option-item input:focus {
     border-color: #50c878;
-    box-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
     outline: none;
 }
 
@@ -330,13 +338,11 @@ form > button[type="submit"]:hover {
     transform: scale(1.1);
 }
 
-/* Responsive Adjustments */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .main-content {
-        padding: 20px 10px;
-    }
-
-    .form-maker-container {
+        margin-left: 60px;
+        width: calc(100% - 60px);
         padding: 20px;
     }
 
@@ -349,7 +355,7 @@ form > button[type="submit"]:hover {
     }
 
     .metadata-section {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 
     .question-card input,
@@ -360,7 +366,7 @@ form > button[type="submit"]:hover {
 
     .add-question-btn {
         font-size: 14px;
-        padding: 10px 20px;
+        padding: 10px;
     }
 }
 

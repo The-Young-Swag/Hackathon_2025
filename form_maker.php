@@ -1,4 +1,6 @@
 <?php
+// form_maker.php
+// Admin tool for creating feedback forms with dynamic questions and options
 
 require 'Config/db_connection.php';
 
@@ -7,15 +9,15 @@ $question_types = [];
 $success_message = '';
 $error_message = '';
 
-// Fetch question types for dropdown
+// Load question types for dropdown
 try {
     $stmt = $pdo->query("SELECT * FROM question_types");
     $question_types = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    $error_message = "Failed to fetch question types: " . $e->getMessage();
+    $error_message = "Couldn’t load question types: " . $e->getMessage();
 }
 
-// Process form submission
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo->beginTransaction();
@@ -26,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':revision_no' => $_POST['revision_no'],
             ':effectivity_date' => $_POST['effectivity_date']
         ];
-
         $stmt = $pdo->prepare(
             "INSERT INTO forms (form_code, revision_no, effectivity_date) 
              VALUES (:form_code, :revision_no, :effectivity_date)"
@@ -44,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':question_text' => $question['question_text'],
                 ':display_order' => $display_order
             ];
-
             $stmt = $pdo->prepare(
                 "INSERT INTO questions (form_id, type_id, question_code, question_text, display_order) 
                  VALUES (:form_id, :type_id, :question_code, :question_text, :display_order)"
@@ -53,14 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $question_id = $pdo->lastInsertId();
             $display_order++;
 
-            // Insert options if provided
+            // Insert options, if any
             foreach ($question['options'] ?? [] as $option) {
                 $option_data = [
                     ':question_id' => $question_id,
                     ':option_value' => $option['value'],
                     ':option_text' => $option['text']
                 ];
-
                 $stmt = $pdo->prepare(
                     "INSERT INTO options (question_id, option_value, option_text) 
                      VALUES (:question_id, :option_value, :option_text)"
@@ -70,10 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $pdo->commit();
-        $success_message = "Form created successfully!";
+        $success_message = "Form saved successfully!";
     } catch (Exception $e) {
         $pdo->rollBack();
-        $error_message = "Failed to create form: " . $e->getMessage();
+        $error_message = "Failed to save form: " . $e->getMessage();
     }
 }
 ?>
@@ -84,39 +83,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Maker - Admin</title>
-
+    <title>Form Maker - Admin Panel</title>
+    <link rel="stylesheet" href="Style/admin-sidebar.css">
     <link rel="stylesheet" href="Style/form_maker_design.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-
+    <!-- Sidebar -->
     <div class="sidebar">
-        <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <button class="toggle-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
         <h2>Admin Panel</h2>
-        <a href="#" class="active"><i class="fas fa-file-alt"></i><span class="link-text">Form Maker</span></a>
-        <a href="#"><i class="fas fa-list"></i><span class="link-text">Form List</span></a>
-        <a href="#" class="client-btn"><i class="fas fa-user"></i><span class="link-text">Client View</span></a>
-        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i><span class="link-text">Logout</span></button>
+        <a href="admin_dashboard.php">
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="link-text">Dashboard</span>
+        </a>
+        <a href="view_offices.php">
+            <i class="fas fa-building"></i>
+            <span class="link-text">View Offices</span>
+        </a>
+        <a href="form_maker.php" class="active">
+            <i class="fas fa-file-alt"></i>
+            <span class="link-text">Form Maker</span>
+        </a>
+        <button class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="link-text">Logout</span>
+        </button>
     </div>
 
-
+    <!-- Main Content -->
     <div class="main-content">
         <div class="form-maker-container">
             <div class="form-maker-header">
-                <h1>Create a New Form</h1>
+                <h1>Create New Form</h1>
             </div>
 
-            <!-- Display Messages -->
+            <!-- Feedback Messages -->
             <?php if ($success_message): ?>
-                <div class="message success"><?php echo htmlspecialchars($success_message); ?></div>
+                <div class="message success">
+                    <?php echo htmlspecialchars($success_message); ?>
+                </div>
             <?php elseif ($error_message): ?>
-                <div class="message error"><?php echo htmlspecialchars($error_message); ?></div>
+                <div class="message error">
+                    <?php echo htmlspecialchars($error_message); ?>
+                </div>
             <?php endif; ?>
 
             <!-- Form -->
             <form id="form-maker" method="POST">
-                <!-- Form Metadata -->
+                <!-- Metadata -->
                 <div class="form-section">
                     <h3>Form Metadata</h3>
                     <div class="metadata-section">
@@ -139,7 +157,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-section">
                     <h3>Questions</h3>
                     <div id="questions-container"></div>
-                    <button type="button" class="add-question-btn" onclick="addQuestion()">Add Question</button>
+                    <button type="button" class="add-question-btn" onclick="addQuestion()">
+                        Add Question
+                    </button>
                 </div>
 
                 <button type="submit">Save Form</button>
@@ -147,18 +167,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-
-    <div class="modal options-modal" id="options-modal">
+    <!-- Options Modal -->
+    <div class="modal" id="options-modal">
         <div class="modal-content">
             <h2>Manage Options</h2>
             <button class="close-modal" onclick="closeOptionsModal()">×</button>
             <div id="options-container"></div>
-            <button type="button" class="add-question-btn" onclick="addOption()">Add Option</button>
-            <button type="button" class="add-question-btn" onclick="saveOptions()">Save Options</button>
+            <button type="button" class="add-question-btn" onclick="addOption()">
+                Add Option
+            </button>
+            <button type="button" class="add-question-btn" onclick="saveOptions()">
+                Save Options
+            </button>
         </div>
     </div>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
         const questionTypes = <?php echo json_encode($question_types); ?>;
     </script>
